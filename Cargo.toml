@@ -1,0 +1,12 @@
+[workspace]
+members = [
+  "tasks/task_1",
+  "tasks/task_2a",
+  "tasks/task_2b",
+  "tasks/task_3_with_question_operator",
+  "tasks/task_3_without_question_operator",
+  "tasks/task_4",
+  "tasks/task_4_with_functional_patterns",
+  "tasks/task_5",
+  "tasks/task_6",
+]
