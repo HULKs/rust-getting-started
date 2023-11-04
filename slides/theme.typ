@@ -37,6 +37,8 @@
     font: "JetBrains Mono",
   )
 
+  show link: underline
+
   slide-footer.update(footer)
 
   body

@@ -166,9 +166,9 @@
       imaginary: f32,
   }
   ```
-
+  #pause
   No inheritance, use composition instead.
-
+  #pause
   Instantiate structs with:
 
   ```rust
@@ -180,10 +180,12 @@
 ]
 
 #slide(title: "Struct Implementations")[
-  #[
-    #set text(size: 21pt)
+  #set text(size: 21pt)
+  ```rust
+  impl ComplexNumber {
+  ```
+  #uncover("2-")[
     ```rust
-    impl ComplexNumber {
         fn zero() -> Self {
             Self { real: 0.0, imaginary: 0.0 }
         }
@@ -192,14 +194,16 @@
             let squared_norm = self.real.powi(2) + self.imaginary.powi(2);
             squared_norm.sqrt()
         }
-    }
     ```
   ]
+  ```rust
+  }
+  ```
+  
 
-  Call a method with:
+  #uncover("3-")[
+    Call a method with:
 
-  #[
-    #set text(size: 21pt)
     ```rust
     let complex_number = ComplexNumber::zero();
     let norm = complex_number.norm();
@@ -208,10 +212,9 @@
 ]
 
 #slide(title: "Traits")[
-  Traits define shared behavior. Other languages call them interfaces.
+  Traits define shared behavior, like interfaces in other languages.
 
-  #[
-    #set text(size: 21pt)
+  #text(size: 21pt)[
     ```rust
     trait Add {
       fn add(self, other: Self) -> Self;
@@ -219,10 +222,11 @@
     ```
   ]
 
+  #pause
+
   Traits can be implemented by other types:
 
-  #[
-    #set text(size: 21pt)
+  #text(size: 21pt)[
     ```rust
     impl Add for ComplexNumber {
       fn add(self, other: Self) -> Self {
@@ -239,8 +243,7 @@
 #slide(title: "Enums")[
   Enums are variants, more powerful than C++ enums.
 
-  #[
-    #set text(size: 21pt)
+  #text(size: 21pt)[
     ```rust
     enum Number {
         OnlyReal(f32),
@@ -254,10 +257,11 @@
     ```
   ]
 
+  #pause
+
   Instantiate enums with:
 
-  #[
-    #set text(size: 21pt)
+  #text(size: 21pt)[
     ```rust
     let number = Number::Complex { real: 42.0, imaginary: 1337.0 };
     ```
@@ -267,7 +271,12 @@
 #slide(title: "Pattern Matching")[
   // https://www.sheshbabu.com/images/2020-rust-for-javascript-developers-4/pattern-matching-rust-1.png
   // https://www.sheshbabu.com/images/2020-rust-for-javascript-developers-4/pattern-matching-rust-2.png
-  #figure(image("pattern-matching.png"))
+  #set text(size: 15pt)
+  #figure(
+    image("pattern-matching.png"),
+    gap: 1em,
+    caption: [https://www.sheshbabu.com/posts/rust-for-javascript-developers-pattern-matching/],
+  )
 ]
 
 #slide(title: "Pattern Matching")[
@@ -427,6 +436,8 @@
 
   It can either be *moved* or *borrowed*.
 
+  #pause
+
   ```rust
   let complex_number = ComplexNumber::zero();
   let mut vector = Vec::new();
@@ -463,7 +474,6 @@
 
 #slide(title: "Task 4: Collections and Ownership")[
   #set text(size: 20pt)
-  #show link: underline
   + For this task, you will need index iteration: ```rust for index in 0..some_length {}```
   + Documentation for ```rust Vec```: https://doc.rust-lang.org/std/vec/struct.Vec.html
   + ```rust fn create_image(width: usize, height: usize) -> Vec<Vec<PixelColor>>```
@@ -479,8 +489,7 @@
   - Transformations on iterators: ```rust map()```, ```rust filter()```, ```rust reduce()```, ```rust enumerate()```, ...
   - Collect iterators into collections
 
-  #[
-    #set text(size: 20pt)
+  #text(size: 20pt)[
     ```rust
     fn get_red_positions(image: &Vec<Vec<PixelColor>>) -> Vec<(usize, usize)> {
         image.iter()
@@ -544,7 +553,8 @@
 ]
 
 #slide(title: "Crates")[
-  External libraries are called crates. You can install them from crates.io using `cargo add`.
+  External libraries are called crates.\
+  You can install them from crates.io using `cargo add`.
 
   Normal workflow:
 
@@ -568,7 +578,6 @@
 ]
 
 #slide(title: "Outlook")[
-  #show link: underline
   - There is more to discover: Modules, Generics, Traits, Lifetimes, Concurrency, I/O
   - Additional material
     - https://doc.rust-lang.org/book/
