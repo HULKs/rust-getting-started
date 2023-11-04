@@ -297,34 +297,41 @@
 ]
 
 #slide(title: "Pattern Matching")[
+  // https://www.sheshbabu.com/images/2020-rust-for-javascript-developers-4/pattern-matching-rust-1.png
+  // https://www.sheshbabu.com/images/2020-rust-for-javascript-developers-4/pattern-matching-rust-2.png
+  #figure(image("pattern-matching.png"))
+]
+
+#slide(title: "Pattern Matching")[
   #set text(size: 16pt)
-  ```rust
-  let is_complex = true;
-  match is_complex {
-      true  => println!("We got a complex number"),
-      false => println!("Normal real number"),
-  }
-  ```
-  #pause
   ```rust
   let number = Number::OnlyReal(42.0);
   match number {
-      OnlyReal(real) => println!("Real part: {}", real),
-                   _ => println!("Something else"),
+      OnlyReal(real: 0.0) => println!("Zero real"),
+      OnlyReal(real)      => println!("Real part: {}", real),  // Matches & Binds `real`
+      _                   => println!("Something else"),
   }
   ```
   #pause
   ```rust
   let norm = match number {
-      OnlyReal(real)          => real,
+      OnlyReal(real)          => real,                         // Matches & Binds `real`
       Complex(complex_number) => complex_number.norm(),
       SomethingElse           => 0.0,
   };
   ```
   #pause
   ```rust
-  if let OnlyReal(real) = number {
+  if let OnlyReal(real) = number {                             // Matches & Binds `real`
       println!("Real part: {}", real);
+  }
+  ```
+  #pause
+  ```rust
+  let is_complex = true;
+  match is_complex {
+      true  => println!("We got a complex number"),            // Matches
+      false => println!("Normal real number"),
   }
   ```
 ]
