@@ -546,8 +546,8 @@
 
 #slide(title: "Task 5: Testing")[
   + Implement two test cases with different image sizes
-    - `create_image_of_2x3_image_has_2_rows`
-    - `get_red_positions_of_4x4_finds_4_positions` // TODO: we need to adjust the solutions
+    - `create_image_of_2x3_image_has_3_rows`
+    - `get_red_positions_of_4x4_finds_diagonal_positions`
   + Run your tests with `cargo test`
 ]
 

@@ -60,39 +60,17 @@ fn main() {
 }
 
 #[test]
-fn test_average_position_of_red_pixels_in_20x10_image() {
-    let image = create_image(20, 10);
-    let positions = get_red_positions(&image);
+fn create_image_of_2x3_image_has_3_rows() {
+    let image = create_image(2, 3);
 
-    let sum_of_positions = positions.iter().fold(
-        (0, 0),
-        |(accumulated_x, accumulated_y), (current_x, current_y)| {
-            (accumulated_x + current_x, accumulated_y + current_y)
-        },
-    );
-    let average_positions = (
-        (sum_of_positions.0 as f32) / (positions.len() as f32),
-        (sum_of_positions.1 as f32) / (positions.len() as f32),
-    );
-
-    assert_eq!(average_positions, (4.5, 4.5));
+    assert_eq!(image.len(), 3);
 }
 
 #[test]
-fn test_average_position_of_red_pixels_in_30x15_image() {
-    let image = create_image(30, 15);
+fn get_red_positions_of_4x4_finds_diagonal_positions() {
+    let image = create_image(4, 4);
     let positions = get_red_positions(&image);
 
-    let sum_of_positions = positions.iter().fold(
-        (0, 0),
-        |(accumulated_x, accumulated_y), (current_x, current_y)| {
-            (accumulated_x + current_x, accumulated_y + current_y)
-        },
-    );
-    let average_positions = (
-        (sum_of_positions.0 as f32) / (positions.len() as f32),
-        (sum_of_positions.1 as f32) / (positions.len() as f32),
-    );
-
-    assert_eq!(average_positions, (7.0, 7.0));
+    let expected_positions = vec![(0, 0), (1, 1), (2, 2), (3, 3)];
+    assert_eq!(positions, expected_positions);
 }
