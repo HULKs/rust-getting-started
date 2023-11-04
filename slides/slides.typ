@@ -50,7 +50,7 @@
 #slide(title: "What is Rust?")[
   #grid(
     columns: (79%, 25%),
-    [ // TODO: keep strong font for emphasizing some things and make the slides more interesting?
+    [
       - *Statically typed:* All types are known at compile time.
       - *Strongly typed:* Compiler checks for type safety.
       - *Memory safe:* No dangling pointers, no buffer overflows.
@@ -74,43 +74,12 @@
   let value = 42;
   ```
 
-  #list(
-    [
-      *Integral:*
-      ```rust i8```,
-      ```rust u8```,
-      ```rust i16```,
-      ```rust u16```,
-      ```rust i32```,
-      ```rust u32```,
-      ```rust i64```,
-      ```rust u64```,
-      ```rust isize```,
-      ```rust usize```
-    ],
-    [
-      *Floating point:*
-      ```rust f32```,
-      ```rust f64```
-    ],
-    [
-      *Boolean:*
-      ```rust bool```
-    ],
-    [
-      *Strings:*
-      ```rust &str```,
-      ```rust String```
-    ],
-    [
-      *Arrays:*
-      ```rust [u32; 42]``` represents 42x ```rust u32``` items, zero indexed
-    ],
-    // TODO: you removed more advanced types?
-    [
-      ...
-    ],
-  )
+  - *Integral:* ```rust i8```, ```rust u8```, ```rust i16```, ```rust u16```, ```rust i32```, ```rust u32```, ```rust i64```, ```rust u64```, ```rust isize```, ```rust usize```
+  - *Floating point:* ```rust f32```, ```rust f64```
+  - *Boolean:* ```rust bool```
+  - *Strings:* ```rust &str```, ```rust String```
+  - *Arrays:* ```rust [u32; 42]``` represents 42x ```rust u32``` items, zero indexed
+  - Slices, `HashMap`, `Vec`, ...
 ]
 
 #slide(title: "Control Flow")[
@@ -163,7 +132,6 @@
   + Add an ```rust if``` statement to print whether the color is red or not
 ]
 
-// TODO: I think it is better to have more things on the slides in less slides to have more context
 #slide(title: "Mutability")[
   #set text(size: 21pt)
   ```rust
