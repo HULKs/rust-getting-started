@@ -29,8 +29,12 @@
   )
   set text(
     fill: black,
-    size: 25pt,
-    font: "Open Sans"
+    size: 23pt,
+    font: "Helvetica Neue",
+  )
+
+  show raw: set text(
+    font: "JetBrains Mono",
   )
 
   slide-footer.update(footer)
