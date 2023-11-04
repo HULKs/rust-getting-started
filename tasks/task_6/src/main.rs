@@ -25,6 +25,7 @@ impl PixelColor {
     }
 }
 
+#[allow(dead_code)]
 fn create_image(width: usize, height: usize) -> Vec<Vec<PixelColor>> {
     let mut image = vec![];
     for y in 0..height {
