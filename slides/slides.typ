@@ -578,7 +578,19 @@
 ]
 
 #slide(title: "Feedback")[
-  - Start: ...
-  - Stop: ...
-  - Continue: ...
+  #set text(size: 40pt)
+  #grid(
+    columns: (48%, 27%, 35%),
+    [
+      #align(end, [What should we#h(30pt)])
+    ],
+    [
+      *Start* \
+      *Stop* \
+      *Continue*
+    ],
+    [
+      doing?
+    ],
+  )
 ]
