@@ -279,7 +279,7 @@
   #figure(
     image("pattern-matching.png"),
     gap: 1em,
-    caption: [https://www.sheshbabu.com/posts/rust-for-javascript-developers-pattern-matching/],
+    caption: [#set text(fill: gray); https://www.sheshbabu.com/posts/rust-for-javascript-developers-pattern-matching/],
   )
 ]
 
