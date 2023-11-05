@@ -30,7 +30,7 @@
   set text(
     fill: black,
     size: 23pt,
-    font: "Helvetica Neue",
+    font: "Hanken Grotesk",
   )
 
   show raw: set text(

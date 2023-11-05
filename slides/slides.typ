@@ -166,9 +166,13 @@
       imaginary: f32,
   }
   ```
+
   #pause
+
   No inheritance, use composition instead.
+
   #pause
+
   Instantiate structs with:
 
   ```rust
