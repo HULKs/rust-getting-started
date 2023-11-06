@@ -79,6 +79,7 @@
   - *Boolean:* ```rust bool```
   - *Strings:* ```rust &str```, ```rust String```
   - *Arrays:* ```rust [u32; 42]``` represents 42x ```rust u32``` items, zero indexed
+  - *Empty Type:* ```rust ()```
   - Slices, `HashMap`, `Vec`, ...
 ]
 
@@ -136,27 +137,42 @@
   #set text(size: 21pt)
   ```rust
   let immutable_value = 42;
-  //  ---------------
-  //  |
-  //  first assignment to `immutable_value`
-  //  help: consider making this binding mutable: `mut immutable_value`
-  immutable_value = 1337;
-  //              ^^^^^^ error: cannot assign twice to immutable variable
   ```
+  #uncover("2-")[
+    ```rust
+    //  ---------------
+    //  |
+    //  first assignment to `immutable_value`
+    //  help: consider making this binding mutable: `mut immutable_value`
+    ```
+  ]
+  ```rust
+  immutable_value = 1337;
+  ```
+  #uncover("2-")[
+    ```rust
+    //              ^^^^^^ error: cannot assign twice to immutable variable
+    ```
+  ]
 
-  #pause
   #v(30pt)
 
-  ```rust
-  let mut mutable_value = 42;
-  mutable_value = 1337;
-  ```
+  #uncover("3-")[
+    ```rust
+    let mut mutable_value = 42;
+    mutable_value = 1337;
+    ```
+  ]
 ]
 
 #slide(title: "Tuples")[
+  Tuple is a fixed size collection of values.
+
   ```rust (f32, bool, &str)``` is a 3-tuple
 
   ```rust let tuple = (1.0, true, "HULKs");```
+
+  Access fields with ```rust tuple.0```, ```rust tuple.1```, ```rust tuple.2```
 ]
 
 #slide(title: "Structs")[
@@ -221,7 +237,7 @@
   #text(size: 21pt)[
     ```rust
     trait Add {
-      fn add(self, other: Self) -> Self;
+        fn add(self, other: Self) -> Self;
     }
     ```
   ]
@@ -233,12 +249,12 @@
   #text(size: 21pt)[
     ```rust
     impl Add for ComplexNumber {
-      fn add(self, other: Self) -> Self {
-        Self {
-          real: self.real + other.real,
-          imaginary: self.imaginary + other.imaginary,
+        fn add(self, other: Self) -> Self {
+            Self {
+                real: self.real + other.real,
+                imaginary: self.imaginary + other.imaginary,
+            }
         }
-      }
     }
     ```
   ]
@@ -252,8 +268,6 @@
     enum Number {
         OnlyReal(f32),
 
-        Complex(ComplexNumber), // or
-        Complex(f32, f32), // or
         Complex{real: f32, imaginary: f32},
 
         SomethingElse,
@@ -268,6 +282,7 @@
   #text(size: 21pt)[
     ```rust
     let number = Number::Complex { real: 42.0, imaginary: 1337.0 };
+    let number2 = Number::SomethingElse;
     ```
   ]
 ]
@@ -276,10 +291,11 @@
   // https://www.sheshbabu.com/images/2020-rust-for-javascript-developers-4/pattern-matching-rust-1.png
   // https://www.sheshbabu.com/images/2020-rust-for-javascript-developers-4/pattern-matching-rust-2.png
   #set text(size: 15pt)
+  #show figure.caption: body => text(fill: gray, body)
   #figure(
     image("pattern-matching.png"),
     gap: 1em,
-    caption: [#set text(fill: gray); https://www.sheshbabu.com/posts/rust-for-javascript-developers-pattern-matching/],
+    caption: [https://www.sheshbabu.com/posts/rust-for-javascript-developers-pattern-matching/],
   )
 ]
 
@@ -288,9 +304,9 @@
   ```rust
   let number = Number::OnlyReal(42.0);
   match number {
-      OnlyReal(real: 0.0) => println!("Zero real"),
-      OnlyReal(real)      => println!("Real part: {}", real),  // Matches & Binds `real`
-      _                   => println!("Something else"),
+      OnlyReal(0.0)  => println!("Zero real"),
+      OnlyReal(real) => println!("Real part: {}", real),  // Matches & Binds `real`
+      _              => println!("Something else"),
   }
   ```
   #pause
@@ -408,10 +424,11 @@
 ]
 
 #slide(title: "Task 3: Result and Error Handling")[
+  #set text(size: 22pt)
   + Refactor ```rust PixelColor::new()``` to return ```rust Result<Self, String>```
     - ```rust new()``` should return ```rust Err``` if a color channel is ```rust < 0``` or ```rust > 1```
-    - ```rust String``` represents an error message that you can define yourself, e.g, ```rust String::from("foo")```
-  + Change return type of ```rust main()``` to ```rust Result<(), String>```, return ```rust Ok(())``` in the end
+    - ```rust String``` represents an error message e.g., ```rust String::from("foo")```
+  + Change return type of ```rust main()``` to ```rust Result<(), String>``` and ```rust return Ok(())```
   + Handle the result of ```rust PixelColor::new()``` with pattern matching
     - Save ```rust Ok``` in the variable
     - Print ```rust Err``` message and return error from ```rust main()```
@@ -440,16 +457,32 @@
 
   It can either be *moved* or *borrowed*.
 
-  #pause
-
-  ```rust
-  let complex_number = ComplexNumber::zero();
-  let mut vector = Vec::new();
-  vector.push(complex_number);
-  //          -------------- value moved here
-  vector.push(complex_number);
-  //          ^^^^^^^^^^^^^^ error: value used here after move
-  ```
+  #uncover("2-")[
+    ```rust
+    let complex_number = ComplexNumber::zero();
+    let mut vector = Vec::new();
+    ```
+  ]
+  #uncover("3-")[
+    ```rust
+    vector.push(complex_number);
+    ```
+  ]
+  #uncover("5-")[
+    ```rust
+    //          -------------- value moved here
+    ```
+  ]
+  #uncover("4-")[
+    ```rust
+    vector.push(complex_number);
+    ```
+  ]
+  #uncover("5-")[
+    ```rust
+    //          ^^^^^^^^^^^^^^ error: value used here after move
+    ```
+  ]
 ]
 
 #slide(title: "Ownership: Borrowing")[
@@ -463,7 +496,7 @@
   #pause
 
   ```rust
-  let complex_number = ComplexNumber::zero();
+  let mut complex_number = ComplexNumber::zero();
   let mut vector = Vec::new();
   vector.push(&mut complex_number);
   //          ------------------- first mutable borrow occurs here
