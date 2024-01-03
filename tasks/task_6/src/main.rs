@@ -1,5 +1,3 @@
-use rand::random;
-
 enum PixelColor {
     Black,
     Custom { red: f32, green: f32, blue: f32 },
@@ -25,29 +23,12 @@ impl PixelColor {
     }
 }
 
-#[allow(dead_code)]
 fn create_image(width: usize, height: usize) -> Vec<Vec<PixelColor>> {
     let mut image = vec![];
     for y in 0..height {
         let mut row = vec![];
         for x in 0..width {
             row.push(if x == y {
-                PixelColor::new(1.0, 0.0, 0.0).unwrap()
-            } else {
-                PixelColor::black()
-            });
-        }
-        image.push(row);
-    }
-    image
-}
-
-fn create_random_image(width: usize, height: usize) -> Vec<Vec<PixelColor>> {
-    let mut image = vec![];
-    for _ in 0..height {
-        let mut row = vec![];
-        for _ in 0..width {
-            row.push(if random() {
                 PixelColor::new(1.0, 0.0, 0.0).unwrap()
             } else {
                 PixelColor::black()
@@ -73,7 +54,7 @@ fn get_red_positions(image: &Vec<Vec<PixelColor>>) -> Vec<(usize, usize)> {
 }
 
 fn main() {
-    let image = create_random_image(20, 10);
+    let image = create_image(20, 10);
     let positions = get_red_positions(&image);
     println!("Positions: {:?}", positions);
 }

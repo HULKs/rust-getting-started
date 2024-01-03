@@ -10,7 +10,7 @@
 )
 
 #slide(title: "Rust Introduction")[
-  Learning Rust in sessions implementing a simple ball detection.
+  Learning Rust in sessions implementing a simple red ball detection.
 
   #grid(
     columns: (25%, 1fr),
@@ -35,13 +35,13 @@
       = Setup Steps
       This guide is for Arch Linux / Manjaro. If you are using another distribution, ask us or try to adapt yourself.
 
-      - Install rustup: `yay -S rustup`
-      - Download Rust stable toolchain: `rustup install stable`
-      - You should be able to execute `cargo --version` which should not result in an error
+      - Install rustup: https://rustup.rs or `yay -S rustup`
+      - Download stable toolchain: `rustup install stable`
+      - Ensure `cargo --version` is successful
 
-      If you are using Visual Studio Code (we recommend that for Newbies), please follow these steps:
+      If you are using Visual Studio Code, follow these steps:
 
-      - In the left pane, select "Extensions"
+      - In the left pane, select _Extensions_
       - Search for `rust-analyzer` and install that extension
     ],
   )
@@ -49,22 +49,29 @@
 
 #slide(title: "What is Rust?")[
   #grid(
-    columns: (79%, 25%),
+    columns: (80%, 25%),
     [
       - *Statically typed:* All types are known at compile time.
       - *Strongly typed:* Compiler checks for type safety.
       - *Memory safe:* No dangling pointers, no buffer overflows.
 
+      #v(1em)
+
       *Hello World Example:*
 
       ```rust
-      fn main() {
-          println!("Hello, world!");
-      }
+        fn main() {
+            println!("Hello, world!");
+        }
       ```
     ],
     [
-      #figure(image("Rust_programming_language_black_logo.svg")) // https://upload.wikimedia.org/wikipedia/commons/d/d5/Rust_programming_language_black_logo.svg
+      #figure(
+        image(
+          width: 90%,
+          "Rust_programming_language_black_logo.svg"
+        )
+      ) // https://upload.wikimedia.org/wikipedia/commons/d/d5/Rust_programming_language_black_logo.svg
     ],
   )
 ]
@@ -102,6 +109,8 @@
   No parantheses around predicates: ```rust if x == 42 { ... }```
 
   Logic operators: ```rust &&```, ```rust ||```, ```rust !```
+
+  Expressions evaluate to a value and can therefore be assigned to a variable: ```rust let x = if condition { 42 } else { 1337 };```
 ]
 
 #slide(title: "Functions")[
@@ -115,7 +124,7 @@
   #v(30pt)
 
   ```rust
-  fn absolute_value(x: f32) -> f32 {
+  fn absolute_value(x: f64) -> f64 {
     if x < 0.0 {
       return -x;
     }
@@ -128,8 +137,8 @@
   + Create a new project with `cargo new hello_world`
   + Inspect the directory structure (e.g. `src/main.rs`)
   + Run the project with `cargo run`
-  + Add a function ```rust fn is_red(red_intensity: f32) -> bool```
-  + Create a variable ```rust red_intensity``` $in [0, 1]$
+  + Add a function ```rust fn is_red(red_intensity: f64) -> bool``` which returns ```rust true``` if ```rust red_intensity``` $in [0.5, 1]$.
+  + In the ```rust main()``` function: Create a variable ```rust red_intensity``` containing a literal value $in [0, 1]$
   + Add an ```rust if``` statement to print whether the color is red or not
 ]
 
@@ -168,7 +177,7 @@
 #slide(title: "Tuples")[
   Tuple is a fixed size collection of values.
 
-  ```rust (f32, bool, &str)``` is a 3-tuple
+  ```rust (f64, bool, &str)``` is a 3-tuple
 
   ```rust let tuple = (1.0, true, "HULKs");```
 
@@ -178,8 +187,8 @@
 #slide(title: "Structs")[
   ```rust
   struct ComplexNumber {
-      real: f32,
-      imaginary: f32,
+      real: f64,
+      imaginary: f64,
   }
   ```
 
@@ -210,7 +219,7 @@
             Self { real: 0.0, imaginary: 0.0 }
         }
 
-        fn norm(self) -> f32 {
+        fn norm(self) -> f64 {
             let squared_norm = self.real.powi(2) + self.imaginary.powi(2);
             squared_norm.sqrt()
         }
@@ -260,30 +269,57 @@
   ]
 ]
 
+#slide(title: "Task 2: Structs")[
+  + Add ```rust struct PixelColor``` which holds three ```rust f64``` RGB color fields
+  + Add two constructors in ```rust impl PixelColor```:
+    - ```rust fn black() -> Self```
+    - ```rust fn new(red: f64, green: f64, blue: f64) -> Self```
+  + Add ```rust fn is_red(self) -> bool``` to ```rust impl PixelColor```
+  + Create two variables ```rust red_pixel``` and ```rust black_pixel```
+  + Use ```rust pixel.is_red()``` instead of ```rust is_red()```
+  + Fix all warnings by cleaning up your code
+]
+
 #slide(title: "Enums")[
   Enums are variants, more powerful than C++ enums.
 
-  #text(size: 21pt)[
-    ```rust
-    enum Number {
-        OnlyReal(f32),
+  #only("1")[
+    #text(size: 21pt)[
+      ```rust
+      enum Number {
+          Real,
 
-        Complex{real: f32, imaginary: f32},
+          Complex,
 
-        SomethingElse,
-    }
-    ```
+          NotANumber,
+      }
+      ```
+    ]
+  ]
+  #only("2-")[
+    #text(size: 21pt)[
+      ```rust
+      enum Number {
+          Real(f64),
+
+          Complex{real: f64, imaginary: f64},
+
+          NotANumber,
+      }
+      ```
+    ]
   ]
 
-  #pause
+  #uncover("3-")[
+    Instantiate enums with:
 
-  Instantiate enums with:
-
-  #text(size: 21pt)[
-    ```rust
-    let number = Number::Complex { real: 42.0, imaginary: 1337.0 };
-    let number2 = Number::SomethingElse;
-    ```
+    #text(size: 21pt)[
+      ```rust
+      let real_number = Number::Real(42.0);
+      let complex_number = Number::Complex { real: 42.0, imaginary: 1337.0 };
+      let not_a_number = Number::NotANumber;
+      ```
+    ]
   ]
 ]
 
@@ -302,52 +338,40 @@
 #slide(title: "Pattern Matching")[
   #set text(size: 16pt)
   ```rust
-  let number = Number::OnlyReal(42.0);
+  let my_value = true;
+  match my_value {
+      true  => println!("Boolean value is true"),
+      false => println!("Boolean value is false"),
+  }
+  ```
+  #pause
+  ```rust
+  let number = Number::Real(42.0);
   match number {
-      OnlyReal(0.0)  => println!("Zero real"),
-      OnlyReal(real) => println!("Real part: {}", real),  // Matches & Binds `real`
-      _              => println!("Something else"),
+      Number::Real(real) => println!("Real part: {real}"),   // Binds `real`
+      _                  => println!("Something else"),
   }
   ```
   #pause
   ```rust
   let norm = match number {
-      OnlyReal(real)          => real,                         // Matches & Binds `real`
-      Complex(complex_number) => complex_number.norm(),
-      SomethingElse           => 0.0,
+      Number::Real(real)               => real.abs(),        // Binds `real`
+      Number::Complex{real, imaginary} => a.abs() + b.abs(), // Binds `real` and `imaginary`
+      Number::NotANumber               => f64::NAN,
   };
   ```
   #pause
   ```rust
-  if let OnlyReal(real) = number {                             // Matches & Binds `real`
-      println!("Real part: {}", real);
-  }
-  ```
-  #pause
-  ```rust
-  let is_complex = true;
-  match is_complex {
-      true  => println!("We got a complex number"),            // Matches
-      false => println!("Normal real number"),
+  if let Number::Real(real) = number {                       // Binds `real`
+      println!("Real part: {real}");
   }
   ```
 ]
 
-#slide(title: "Task 2a: Structs")[
-  + Add ```rust struct PixelColor``` which holds three ```rust f32``` RGB color fields
-  + Add two constructors in ```rust impl PixelColor```:
-    - ```rust fn black() -> Self```
-    - ```rust fn new(red: f32, green: f32, blue: f32) -> Self```
-  + Add ```rust fn is_red(self) -> bool``` to ```rust impl PixelColor```
-  + Create two variables ```rust red_pixel``` and ```rust black_pixel```
-  + Use ```rust pixel.is_red()``` instead of ```rust is_red()```
-  + Fix all warnings by cleaning up your code
-]
-
-#slide(title: "Task 2b: Enums and Pattern Matching")[
+#slide(title: "Task 3: Enums and Pattern Matching")[
   + Convert ```rust struct PixelColor``` into ```rust enum PixelColor``` with two variants:
     - ```rust Black```
-    - ```rust Custom { red: f32, green: f32, blue: f32 }```
+    - ```rust Custom { red: f64, green: f64, blue: f64 }```
   + Refactor constructors to generate enum variants
   + Use pattern matching inside ```rust is_red()```
 ]
@@ -355,8 +379,8 @@
 #slide(title: "Option")[
   ```rust
   // part of std library
-  enum Option<T> {
-      Some(T),
+  enum Option<Value> {
+      Some(Value),
       None,
   }
 
@@ -370,9 +394,9 @@
 #slide(title: "Result")[
   ```rust
   // part of std library
-  enum Result<T, E> {
-      Ok(T),
-      Err(E),
+  enum Result<Value, Error> {
+      Ok(Value),
+      Err(Error),
   }
 
   let success = Ok(42);
@@ -387,8 +411,8 @@
     #set text(size: 18pt)
     ```rust
     match File::open("file.txt") {
-        Ok(opened_file) => { read_from(opened_file)                 },
-        Err(error)      => { eprintln!("Failed to open: {}", error) },
+        Ok(file)   => { read_from(file)                      },
+        Err(error) => { eprintln!("Failed to open: {error}") },
     };
     ```
   ]
@@ -403,7 +427,6 @@
             Ok(data)   => data,
             Err(error) => return Err(error),
         };
-        dbg!(data);
         Ok(data)
     }
     ```
@@ -416,14 +439,13 @@
     ```rust
     fn read_from(file: File) -> Result<String, std::io::Error> {
         let data = file.read()?;
-        dbg!(data);
         Ok(data)
     }
     ```
   ]
 ]
 
-#slide(title: "Task 3: Result and Error Handling")[
+#slide(title: "Task 4: Result and Error Handling")[
   #set text(size: 22pt)
   + Refactor ```rust PixelColor::new()``` to return ```rust Result<Self, String>```
     - ```rust new()``` should return ```rust Err``` if a color channel is ```rust < 0``` or ```rust > 1```
@@ -509,15 +531,55 @@
   Borrowed references (sometimes) need to be dereferenced with ```rust *```
 ]
 
-#slide(title: "Task 4: Collections and Ownership")[
+#slide(title: "Ownership: Moving Borrowed Values")[
+  #set text(size: 20pt)
+  ```rust
+  let complex_number = ComplexNumber::zero();
+  ```
+  #uncover("2-")[
+    ```rust
+    //  -------------- binding `complex_number` declared here
+    ```
+  ]
+  ```rust
+  let mut borrowing_vector = Vec::new();
+  borrowing_vector.push(&complex_number);
+  ```
+  #uncover("2-")[
+    ```rust
+    //                    --------------- borrow of `complex_number` occurs here
+    ```
+  ]
+  ```rust
+  let mut owning_vector = Vec::new();
+  owning_vector.push(complex_number);
+  ```
+  #uncover("2-")[
+    ```rust
+    //                 ^^^^^^^^^^^^^^ move out of `complex_number` occurs here
+    ```
+  ]
+  ```rust
+  dbg!(borrowing_vector);
+  ```
+  #uncover("2-")[
+    ```rust
+    //   ---------------- borrow later used here
+    ```
+  ]
+]
+
+#slide(title: "Task 5: Collections and Ownership")[
   #set text(size: 20pt)
   + For this task, you will need index iteration: ```rust for index in 0..some_length {}```
   + Documentation for ```rust Vec```: https://doc.rust-lang.org/std/vec/struct.Vec.html
   + ```rust fn create_image(width: usize, height: usize) -> Vec<Vec<PixelColor>>```
     - Store red pixel if ```rust x == y```, else black
     - Create an image of size 20x10 in ```rust main()``` using this function
+  + ```rust fn is_red(self) -> bool``` should now take ```rust self``` by reference (```rust &self```)
   + Iterate over pixels by index, find red pixels, store them in a collection
     - ```rust fn get_red_positions(image: &Vec<Vec<PixelColor>>) -> Vec<(usize, usize)>```
+  + Add ```rust #[derive(Debug)]``` to ```rust PixelColor```
   + Use ```rust dbg!(positions);``` to print the resulting collection
 ]
 
@@ -565,7 +627,7 @@
   ```
 ]
 
-#slide(title: "Task 5: Testing")[
+#slide(title: "Task 6: Testing")[
   + Implement two test cases with different image sizes
     - `create_image_of_2x3_image_has_3_rows`
     - `get_red_positions_of_4x4_finds_diagonal_positions`
@@ -604,7 +666,7 @@
   ... or use `cargo add`
 ]
 
-#slide(title: "Task 6: Crates")[
+#slide(title: "Task 7: Crates")[
   #set text(size: 21pt)
   + Add `rand` to your `Cargo.toml`, make yourself familiar with the crate via docs.rs
   + Generate a random image
@@ -621,6 +683,8 @@
     - https://doc.rust-lang.org/rust-by-example/
     - https://crates.io
     - https://docs.rs
+    - https://lib.rs
+    - https://rustlings.cool/
 ]
 
 #slide(title: "Feedback")[

@@ -1,42 +1,40 @@
 # Rust Introduction
 
-Lessons learned:
+This hands-on session is designed to introduce programmers to the Rust programming language, focusing on syntax and simple concepts.
+Familiarity with other programming languages will be beneficial but is not mandatory.
 
-- It will take long (last event was 7 hours long)
-- This introduction has a focus on syntax and new simple concepts and not "medium"/"advanced" features (traits, generics, ...)
-- The idea is to extend one file further and further with the tasks
-- Tutors should only explain things that we covered in the slides before
-- Tutors will wonder around, answer questions, and guide participants
+## Preparation
 
-TODO:
+1. Install `rustup` (<https://rustup.rs>)
+2. Install the latest stable toolchain (should be the default)
+3. Ensure that Rust is installed and accessible by running `cargo --version`
+4. Install an editor/IDE of your choice (e.g. VSCode with 'Rust Analyzer Extension')
 
-- Control Flow in Variable (man kann auch `if`/`match`/`loop` in variablen speichern)
-- Enum ist ein Beispiel was nicht kompiliert (andere Fälle auskommentieren, anstatt löschen)
-- Wir machen `println!("something else")` aber es gibt einen Typen SomethingElse
-- floats matchen vielleicht nicht (nicht kompilierbar)
-- Task 2a früher hinter den Tuples/Structs
-- Matching: boolean zuerst?
-- Erstmal nur C++-style enums, dann Typen hinzufügen
-- Please don't abbreviate: Option, Result `<T>` -> `<Value>` und `<E>` -> `<Error>`
-- move of borrowed value fehlt
-- Bild für `Vec<Vec<PixelColor>>`
-- `#[derive(Debug)]`
-- Man braucht im Task mit `get_red_positions()` eine `&self` reference in `is_red()`
-- Additional material: rustlinks, libs.rs
+## Guidelines for a successful session
+
+- The session may take long, around 7 hours
+- We emphasize syntax and core introductary conteps, avoiding advanced features like generics. This allows participants to grasp the fundamentals and get started to explore Rust.
+- - Our goal is to to incrementally build understanding by extending a single file (`main.rs`).
+- Tutors should only explain concepts covered in the slides. Explanations and guidance should align with the presented content, ensuring a coherent learning experience.
+- Tutors should engage with participants by walking around, answering questions, and providing guidance.
+
+## Things to improve / TODOs
+
+- figure to explain concept of `Vec<Vec<PixelColor>>`
 
 Feedback:
 
 - Start:
-    - wo findet man Doku zu den Dingen auf den Folien, weitere Links hinzufügen
-    - Zusatzaufgaben für Schnelle
-    - wie printed man Dinge (dbg, format String)
+  - wo findet man Doku zu den Dingen auf den Folien, weitere Links hinzufügen
+  - Zusatzaufgaben für Schnelle
+  - wie printed man Dinge (dbg, format String)
 - Stop:
-    - Beispiele sollten kompilieren
-    - Pattern Matching einfaches boolean Beispiel nach oben
-    - wo soll bei dem is_red geprinted werden (in main oder in der Funktion) (Task 1 Aufgabenbeschreibung genauer machen)
-    - Block mit Structs und Enums zu lang
+  - Beispiele sollten kompilieren
+  - Pattern Matching einfaches boolean Beispiel nach oben
+  - wo soll bei dem is_red geprinted werden (in main oder in der Funktion) (Task 1 Aufgabenbeschreibung genauer machen)
+  - Block mit Structs und Enums zu lang
 - Continue:
-    - gleiche Datei immer ausgebaut
-    - Folien, Vorbereitung
-    - mit Beispielen direkt coden
-    - rumgegangen
+  - gleiche Datei immer ausgebaut
+  - Folien, Vorbereitung
+  - mit Beispielen direkt coden
+  - rumgegangen

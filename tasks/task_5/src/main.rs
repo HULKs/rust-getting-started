@@ -58,19 +58,3 @@ fn main() {
     let positions = get_red_positions(&image);
     println!("Positions: {:?}", positions);
 }
-
-#[test]
-fn create_image_of_2x3_image_has_3_rows() {
-    let image = create_image(2, 3);
-
-    assert_eq!(image.len(), 3);
-}
-
-#[test]
-fn get_red_positions_of_4x4_finds_diagonal_positions() {
-    let image = create_image(4, 4);
-    let positions = get_red_positions(&image);
-
-    let expected_positions = vec![(0, 0), (1, 1), (2, 2), (3, 3)];
-    assert_eq!(positions, expected_positions);
-}
