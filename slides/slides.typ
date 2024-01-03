@@ -42,7 +42,7 @@
       If you are using Visual Studio Code, follow these steps:
 
       - In the left pane, select _Extensions_
-      - Search for `rust-analyzer` and install that extension
+      - Search install the `rust-analyzer` extension
     ],
   )
 ]
@@ -133,13 +133,30 @@
   ```
 ]
 
+#slide(title: "Printing")[
+  ```rust
+  println!("Hello, world!");
+  // Hello, world!
+
+  let x = 42;
+  println!("The answer is {x}");
+  // The answer is 42
+
+  let y = 1337;
+  dbg!(y);
+  // [src/main.rs:5] y = 1337
+  ```
+]
+
 #slide(title: "Task 1: Hello World and Functions")[
   + Create a new project with `cargo new hello_world`
   + Inspect the directory structure (e.g. `src/main.rs`)
   + Run the project with `cargo run`
-  + Add a function ```rust fn is_red(red_intensity: f64) -> bool``` which returns ```rust true``` if ```rust red_intensity``` $in [0.5, 1]$.
-  + In the ```rust main()``` function: Create a variable ```rust red_intensity``` containing a literal value $in [0, 1]$
-  + Add an ```rust if``` statement to print whether the color is red or not
+  + Add a function ```rust fn is_red(red_intensity: f64) -> bool```
+  + In the ```rust main()``` function:
+    - Create a variable ```rust red_intensity``` containing a literal value $in [0, 1]$
+    - Determine whether the color is red using ```rust is_red()```
+    - Add an ```rust if``` statement to print whether the color is red or not
 ]
 
 #slide(title: "Mutability")[
