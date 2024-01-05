@@ -372,9 +372,9 @@
   #pause
   ```rust
   let norm = match number {
-      Number::Real(real)               => real.abs(),        // Binds `real`
-      Number::Complex{real, imaginary} => a.abs() + b.abs(), // Binds `real` and `imaginary`
-      Number::NotANumber               => f64::NAN,
+      Number::Real(real)                     => real.abs(),        // Binds `real`
+      Number::Complex{real: a, imaginary: b} => a.abs() + b.abs(), // Binds `real` and `imaginary`
+      Number::NotANumber                     => f64::NAN,
   };
   ```
   #pause
