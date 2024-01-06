@@ -20,5 +20,4 @@ Familiarity with other programming languages will be beneficial but is not manda
 
 ## Things to improve / TODOs
 
-- figure to explain concept of `Vec<Vec<PixelColor>>`
 - more additional and optional tasks

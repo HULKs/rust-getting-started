@@ -42,7 +42,7 @@
       If you are using Visual Studio Code, follow these steps:
 
       - In the left pane, select _Extensions_
-      - Search install the `rust-analyzer` extension
+      - Search and install the `rust-analyzer` extension
     ],
   )
 ]
@@ -355,14 +355,6 @@
 #slide(title: "Pattern Matching")[
   #set text(size: 16pt)
   ```rust
-  let my_value = true;
-  match my_value {
-      true  => println!("Boolean value is true"),
-      false => println!("Boolean value is false"),
-  }
-  ```
-  #pause
-  ```rust
   let number = Number::Real(42.0);
   match number {
       Number::Real(real) => println!("Real part: {real}"),   // Binds `real`
@@ -373,7 +365,8 @@
   ```rust
   let norm = match number {
       Number::Real(real)                     => real.abs(),        // Binds `real`
-      Number::Complex{real: a, imaginary: b} => a.abs() + b.abs(), // Binds `real` and `imaginary`
+      Number::Complex{real: r, imaginary: i} => r.abs() + i.abs(), // Binds `real` to `r` and
+                                                                   //       `imaginary` to `i`
       Number::NotANumber                     => f64::NAN,
   };
   ```
@@ -381,6 +374,14 @@
   ```rust
   if let Number::Real(real) = number {                       // Binds `real`
       println!("Real part: {real}");
+  }
+  ```
+  #pause
+  ```rust
+  let my_value = true;
+  match my_value {
+      true  => println!("Boolean value is true"),
+      false => println!("Boolean value is false"),
   }
   ```
 ]
@@ -525,27 +526,47 @@
 ]
 
 #slide(title: "Ownership: Borrowing")[
-  ```rust
-  let complex_number = ComplexNumber::zero();
-  let mut vector = Vec::new();
-  vector.push(&complex_number); // value immutably borrowed here
-  vector.push(&complex_number); // value immutably borrowed here
-  ```
+  #[
+    #set text(size: 18pt)
+    ```rust
+    let complex_number = ComplexNumber::zero();
+    let mut vector = Vec::new();
+    vector.push(&complex_number); // value immutably borrowed here
+    vector.push(&complex_number); // value immutably borrowed here
+    ```
+  ]
 
-  #pause
-
-  ```rust
-  let mut complex_number = ComplexNumber::zero();
-  let mut vector = Vec::new();
-  vector.push(&mut complex_number);
-  //          ------------------- first mutable borrow occurs here
-  vector.push(&mut complex_number);
-  //     ---- ^^^^^^^^^^^^^^^^^^^ second mutable borrow occurs here
-  //     |
-  //     first borrow later used by call
-  ```
-
-  Borrowed references (sometimes) need to be dereferenced with ```rust *```
+  #uncover("2-")[
+    #set text(size: 18pt)
+    ```rust
+    let mut complex_number = ComplexNumber::zero();
+    let mut vector = Vec::new();
+    vector.push(&mut complex_number);
+    ```
+  ]
+  #uncover("3-")[
+    #set text(size: 18pt)
+    ```rust
+    //          ------------------- first mutable borrow occurs here
+    ```
+  ]
+  #uncover("2-")[
+    #set text(size: 18pt)
+    ```rust
+    vector.push(&mut complex_number);
+    ```
+  ]
+  #uncover("3-")[
+    #set text(size: 18pt)
+    ```rust
+    //     ---- ^^^^^^^^^^^^^^^^^^^ second mutable borrow occurs here
+    //     |
+    //     first borrow later used by call
+    ```
+  ]
+  #uncover("4-")[
+    Borrowed references (sometimes) need to be dereferenced with ```rust *```
+  ]
 ]
 
 #slide(title: "Ownership: Moving Borrowed Values")[
@@ -587,9 +608,15 @@
 ]
 
 #slide(title: "Task 5: Collections and Ownership")[
-  #set text(size: 20pt)
-  + For this task, you will need index iteration: ```rust for index in 0..some_length {}```
-  + Documentation for ```rust Vec```: https://doc.rust-lang.org/std/vec/struct.Vec.html
+  #set text(size: 18pt)
+  Tips:
+
+  - For this task, you will need index iteration: ```rust for index in 0..some_length {}```
+  - Documentation for ```rust Vec```: https://doc.rust-lang.org/std/vec/struct.Vec.html
+  - See the visualization for the image type ```rust Vec<Vec<PixelColor>>``` on the next slide
+
+  Steps:
+
   + ```rust fn create_image(width: usize, height: usize) -> Vec<Vec<PixelColor>>```
     - Store red pixel if ```rust x == y```, else black
     - Create an image of size 20x10 in ```rust main()``` using this function
@@ -598,6 +625,14 @@
     - ```rust fn get_red_positions(image: &Vec<Vec<PixelColor>>) -> Vec<(usize, usize)>```
   + Add ```rust #[derive(Debug)]``` to ```rust PixelColor```
   + Use ```rust dbg!(positions);``` to print the resulting collection
+]
+
+#slide(title: "Image Type for Task 5: Collections and Ownership")[
+  #figure(
+    image("vec_vec_pixel_color.drawio.svg", height: 100% - 2em),
+    gap: 1em,
+    caption: [Row Major ```rust Vec<Vec<PixelColor>>```],
+  )
 ]
 
 #slide(title: "Functional Patterns")[
