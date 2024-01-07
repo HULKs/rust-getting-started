@@ -237,8 +237,7 @@
         }
 
         fn norm(self) -> f64 {
-            let squared_norm = self.real.powi(2) + self.imaginary.powi(2);
-            squared_norm.sqrt()
+            self.real.abs() + self.imaginary.abs()
         }
     ```
   ]
@@ -262,8 +261,8 @@
 
   #text(size: 21pt)[
     ```rust
-    trait Add {
-        fn add(self, other: Self) -> Self;
+    trait MyAdd {
+        fn my_add(self, other: Self) -> Self;
     }
     ```
   ]
@@ -274,8 +273,8 @@
 
   #text(size: 21pt)[
     ```rust
-    impl Add for ComplexNumber {
-        fn add(self, other: Self) -> Self {
+    impl MyAdd for ComplexNumber {
+        fn my_add(self, other: Self) -> Self {
             Self {
                 real: self.real + other.real,
                 imaginary: self.imaginary + other.imaginary,
@@ -468,7 +467,7 @@
   + Refactor ```rust PixelColor::new()``` to return ```rust Result<Self, String>```
     - ```rust new()``` should return ```rust Err``` if a color channel is ```rust < 0``` or ```rust > 1```
     - ```rust String``` represents an error message e.g., ```rust String::from("foo")```
-  + Change return type of ```rust main()``` to ```rust Result<(), String>``` and ```rust return Ok(())```
+  + Change return type of ```rust main()``` to ```rust Result<(), String>``` and return ```rust Ok(())```
   + Handle the result of ```rust PixelColor::new()``` with pattern matching
     - Save ```rust Ok``` in the variable
     - Print ```rust Err``` message and return error from ```rust main()```
@@ -621,7 +620,7 @@
     - Store red pixel if ```rust x == y```, else black
     - Create an image of size 20x10 in ```rust main()``` using this function
   + ```rust fn is_red(self) -> bool``` should now take ```rust self``` by reference (```rust &self```)
-  + Iterate over pixels by index, find red pixels, store them in a collection
+  + Create new function, iterate over pixels by index, find red pixels, store them in a collection
     - ```rust fn get_red_positions(image: &Vec<Vec<PixelColor>>) -> Vec<(usize, usize)>```
   + Add ```rust #[derive(Debug)]``` to ```rust PixelColor```
   + Use ```rust dbg!(positions);``` to print the resulting collection

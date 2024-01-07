@@ -21,3 +21,11 @@ Familiarity with other programming languages will be beneficial but is not manda
 ## Things to improve / TODOs
 
 - more additional and optional tasks
+- struct initialization: how to access members? kommt theoretisch auf der nächsten Slide, aber vielleicht will man das früher?
+- ComplexNumber::norm lieber als Manhattan Norm implementieren?
+- Task 2, Schritt 4: Variablennamen tauschen, weil ist einfacher zum erklären
+- Meme beim Pattern Matching, lustiger werden
+- Option::nothing kompiliert nicht
+- Lernwochenende, Mittwoch
+- noch mehr Kontext zu dem Produktivcode, Anekdoten erhöhen
+- zu wenig Tutoren
