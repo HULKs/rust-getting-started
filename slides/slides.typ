@@ -347,7 +347,7 @@
   #figure(
     image("pattern-matching.png"),
     gap: 1em,
-    caption: [https://www.sheshbabu.com/posts/rust-for-javascript-developers-pattern-matching/],
+    caption: [https://www.sheshbabu.com/posts/rust-for-javascript-developers-pattern-matching-and-enums/],
   )
 ]
 
